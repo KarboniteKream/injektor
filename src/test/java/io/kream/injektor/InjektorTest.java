@@ -1,9 +1,10 @@
 package io.kream.injektor;
 
-import io.kream.injektor.internal.Context;
-import io.kream.injektor.internal.Factory;
-import io.kream.injektor.internal.SingletonFactory;
-import io.kream.injektor.internal.ValueFactory;
+import io.kream.injektor.context.Context;
+import io.kream.injektor.context.Factory;
+import io.kream.injektor.context.NoSuchFactoryException;
+import io.kream.injektor.context.SingletonFactory;
+import io.kream.injektor.context.ValueFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,4 @@
-package io.kream.injektor.internal;
-
-import io.kream.injektor.NoSuchFactoryException;
+package io.kream.injektor.context;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;

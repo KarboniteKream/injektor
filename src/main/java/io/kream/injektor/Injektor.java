@@ -1,6 +1,6 @@
 package io.kream.injektor;
 
-import io.kream.injektor.internal.Context;
+import io.kream.injektor.context.Context;
 
 public final class Injektor {
     private final Context context;

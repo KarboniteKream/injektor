@@ -1,4 +1,4 @@
-package io.kream.injektor.internal;
+package io.kream.injektor.context;
 
 public final class ValueFactory<T> extends Factory<T> {
     private final T value;

@@ -5,7 +5,13 @@ A simple dependency injection container for Java.
 ## Example
 
 ```java
-class Main {
+import io.kream.injektor.Injektor;
+import io.kream.injektor.context.Context;
+import io.kream.injektor.context.ValueFactory;
+
+import javax.inject.Inject;
+
+public class Main {
     public static void main(String[] args) {
         final Context context = new Context();
         context.register(Counter.class, ValueFactory.of(new Counter()));

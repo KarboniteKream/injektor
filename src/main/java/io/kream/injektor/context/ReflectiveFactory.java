@@ -1,4 +1,4 @@
-package io.kream.injektor.internal;
+package io.kream.injektor.context;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;

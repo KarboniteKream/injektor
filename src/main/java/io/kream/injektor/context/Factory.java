@@ -1,4 +1,4 @@
-package io.kream.injektor.internal;
+package io.kream.injektor.context;
 
 public abstract class Factory<T> {
     protected void resolve(Context context) {
