@@ -1,5 +1,7 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
 
 group 'io.kream'
@@ -19,4 +21,56 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        jar(MavenPublication) {
+            from components.java
+
+            pom {
+                name = 'injektor'
+                description = 'A simple dependency injection container for Java.'
+                url = 'https://github.com/KarboniteKream/injektor'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'Klemen Košir'
+                        email = 'klemen.kosir@kream.io'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/KarboniteKream/injektor.git'
+                    developerConnection = 'scm:git:ssh://github.com:KarboniteKream/injektor.git'
+                    url = 'https://github.com/KarboniteKream/injektor'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def snapshotUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+            def releaseUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+
+            url = version.endsWith('-SNAPSHOT') ? snapshotUrl : releaseUrl
+            credentials {
+                username project.findProperty('ossrh.username')
+                password project.findProperty('ossrh.password')
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.jar
 }
