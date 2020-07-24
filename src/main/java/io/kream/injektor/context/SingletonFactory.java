@@ -4,12 +4,12 @@ public final class SingletonFactory<T> extends Factory<T> {
     private final Factory<T> factory;
     private T singleton;
 
-    public static <T> Factory<T> of(Factory<T> factory) {
-        return new SingletonFactory<>(factory);
-    }
-
     private SingletonFactory(Factory<T> factory) {
         this.factory = factory;
+    }
+
+    public static <T> Factory<T> of(Factory<T> factory) {
+        return new SingletonFactory<>(factory);
     }
 
     @Override

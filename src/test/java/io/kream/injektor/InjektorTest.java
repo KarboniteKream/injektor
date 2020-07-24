@@ -5,6 +5,7 @@ import io.kream.injektor.context.Factory;
 import io.kream.injektor.context.NoSuchFactoryException;
 import io.kream.injektor.context.SingletonFactory;
 import io.kream.injektor.context.ValueFactory;
+import io.kream.injektor.util.Counter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,17 +16,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InjektorTest {
     private Context context;
-    private Injektor target;
+    private Injektor injektor;
 
     @BeforeEach
     void setUp() {
-        context = new Context();
-        target = Injektor.create(context);
+        context = Context.create();
+        injektor = Injektor.create(context);
     }
 
     @Test
     void noFactory() {
-        assertThatThrownBy(() -> target.getInstance(HttpClient.class))
+        assertThatThrownBy(() -> injektor.getInstance(HttpClient.class))
                 .isInstanceOf(NoSuchFactoryException.class);
     }
 
@@ -33,7 +34,7 @@ class InjektorTest {
     void httpClient() {
         context.register(Client.class, ValueFactory.of(new HttpClient()));
 
-        final Client client = target.getInstance(Client.class);
+        final Client client = injektor.getInstance(Client.class);
         assertThat(client).isInstanceOf(HttpClient.class);
         assertThat(client.getProtocol()).isEqualTo("http");
     }
@@ -47,12 +48,12 @@ class InjektorTest {
             }
         });
 
-        final Counter counter1 = target.getInstance(Counter.class);
+        final Counter counter1 = injektor.getInstance(Counter.class);
         assertThat(counter1.get()).isEqualTo(0);
         counter1.increment();
         assertThat(counter1.get()).isEqualTo(1);
 
-        final Counter counter2 = target.getInstance(Counter.class);
+        final Counter counter2 = injektor.getInstance(Counter.class);
         assertThat(counter2.get()).isEqualTo(0);
         counter2.increment();
         counter2.increment();
@@ -70,12 +71,12 @@ class InjektorTest {
             }
         }));
 
-        final Counter counter1 = target.getInstance(Counter.class);
+        final Counter counter1 = injektor.getInstance(Counter.class);
         assertThat(counter1.get()).isEqualTo(0);
         counter1.increment();
         assertThat(counter1.get()).isEqualTo(1);
 
-        final Counter counter2 = target.getInstance(Counter.class);
+        final Counter counter2 = injektor.getInstance(Counter.class);
         assertThat(counter2.get()).isEqualTo(1);
         counter2.increment();
         counter2.increment();
@@ -101,7 +102,7 @@ class InjektorTest {
             }
         });
 
-        final CounterDelegate counter = target.getInstance(CounterDelegate.class);
+        final CounterDelegate counter = injektor.getInstance(CounterDelegate.class);
         assertThat(counter.get()).isEqualTo(0);
         counter.increment();
         counter.increment();
@@ -113,7 +114,7 @@ class InjektorTest {
     void counterDelegate_inject() {
         context.register(Counter.class, ValueFactory.of(new Counter()));
 
-        final CounterDelegate counter = target.getInstance(CounterDelegate.class);
+        final CounterDelegate counter = injektor.getInstance(CounterDelegate.class);
         assertThat(counter.get()).isEqualTo(0);
         counter.increment();
         counter.increment();
@@ -130,18 +131,6 @@ class InjektorTest {
         @Override
         public String getProtocol() {
             return "http";
-        }
-    }
-
-    private static class Counter {
-        private int count;
-
-        public int get() {
-            return count;
-        }
-
-        public void increment() {
-            count++;
         }
     }
 

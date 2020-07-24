@@ -1,8 +1,8 @@
 package io.kream.injektor.context;
 
-public abstract class Factory<T> {
+import javax.inject.Provider;
+
+public abstract class Factory<T> implements Provider<T> {
     protected void resolve(Context context) {
     }
-
-    public abstract T get();
 }

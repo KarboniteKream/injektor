@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 public class Main {
     public static void main(String[] args) {
-        final Context context = new Context();
+        final Context context = Context.create();
         context.register(Counter.class, ValueFactory.of(new Counter()));
 
         final Injektor injektor = Injektor.create(context);

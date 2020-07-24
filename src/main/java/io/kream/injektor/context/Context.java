@@ -11,6 +11,10 @@ public class Context {
     private final Map<Class<?>, Factory<?>> registeredFactories = new HashMap<>();
     private final Map<Class<?>, Factory<?>> resolvedFactories = new HashMap<>();
 
+    public static Context create() {
+        return new Context();
+    }
+
     public <T> void register(Class<T> type, Factory<T> factory) {
         registeredFactories.put(type, factory);
     }
