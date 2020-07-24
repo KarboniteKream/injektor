@@ -44,6 +44,7 @@ public final class ReflectiveFactory<T> extends Factory<T> {
         final Object[] parameters = descriptors.stream().map(Descriptor::get).toArray();
 
         try {
+            constructor.setAccessible(true);
             return constructor.newInstance(parameters);
         } catch (Exception e) {
             throw new RuntimeException(e);

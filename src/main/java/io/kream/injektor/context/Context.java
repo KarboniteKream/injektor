@@ -17,6 +17,10 @@ public class Context {
     }
 
     public <T> void register(Class<T> type, Factory<T> factory) {
+        if (registeredFactories.containsKey(type)) {
+            throw new IllegalArgumentException("Duplicate factory for " + type);
+        }
+
         registeredFactories.put(type, factory);
     }
 
@@ -52,7 +56,7 @@ public class Context {
             return factory;
         }
 
-        throw new NoSuchFactoryException(type);
+        throw new IllegalArgumentException("No factory for " + type);
     }
 
     @Nullable
@@ -68,7 +72,6 @@ public class Context {
                 throw new IllegalArgumentException("More than one injectable constructor on " + type);
             }
 
-            constructor.setAccessible(true);
             injectableConstructor = constructor;
         }
 

@@ -2,7 +2,6 @@ package io.kream.injektor;
 
 import io.kream.injektor.context.Context;
 import io.kream.injektor.context.Factory;
-import io.kream.injektor.context.NoSuchFactoryException;
 import io.kream.injektor.context.SingletonFactory;
 import io.kream.injektor.context.ValueFactory;
 import io.kream.injektor.util.Counter;
@@ -27,7 +26,7 @@ class InjektorTest {
     @Test
     void noFactory() {
         assertThatThrownBy(() -> injektor.getInstance(HttpClient.class))
-                .isInstanceOf(NoSuchFactoryException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
