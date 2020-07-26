@@ -25,8 +25,8 @@ test {
 }
 
 java {
-    withSourcesJar()
     withJavadocJar()
+    withSourcesJar()
 }
 
 publishing {
@@ -58,12 +58,13 @@ publishing {
             }
         }
     }
+
     repositories {
         maven {
-            def snapshotUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
-            def releaseUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+            url = version.endsWith('-SNAPSHOT')
+                    ? 'https://oss.sonatype.org/content/repositories/snapshots'
+                    : 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
 
-            url = version.endsWith('-SNAPSHOT') ? snapshotUrl : releaseUrl
             credentials {
                 username project.findProperty('ossrh.username')
                 password project.findProperty('ossrh.password')
